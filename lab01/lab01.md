@@ -1,4 +1,4 @@
-##Lab one - Create first SprintBoot Fuse project
+## Lab one - Create first SprintBoot Fuse project
 In JBoss Developer Studio, create a new project by right click in the project explorer panel, select **New** -> **Fuse Integration Project**
 
 ![01-FIS-project.png](./img/01-FIS-project.png)
@@ -88,4 +88,3 @@ In you log console, verify that cutomer data are printed.
 ```
 customer - [{CUSTOMERID=A01, VIPSTATUS=Diamond, BALANCE=1000}, {CUSTOMERID=A02, VIPSTATUS=Gold, BALANCE=500}]
 ```
-hift
