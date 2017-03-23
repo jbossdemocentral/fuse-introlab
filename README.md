@@ -97,7 +97,10 @@ https://10.1.2.2:8443
 ```
 
 Going back to Red Hat JBoss Developer Studio, in OpenShift Explorer view, click on **New Connection Wizard..** to configure OpenShift setting
-
 Enter **https://10.1.2.2:8443** as the **Server** and click on the **retrieve** link to access the token.
 
+![05-token.png](./img/06-token.png)
+
 In the popup window, log in as Developer using ID/PWD openshift-del/devel. Select ok and check the **Save token** box.
+
+![06-connection.png](./img/07-connection.png)
