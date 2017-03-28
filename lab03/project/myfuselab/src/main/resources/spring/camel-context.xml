@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.18.1.xsd">
+    <bean
+        class="org.apache.camel.component.servlet.CamelHttpTransportServlet" id="camelHttpTransportServlet"/>
+    <bean
+        class="org.springframework.boot.web.servlet.ServletRegistrationBean" id="servlet">
+        <property name="name" value="CamelServlet"/>
+        <property name="servlet" ref="camelHttpTransportServlet"/>
+        <property name="urlMappings" value="/myfuselab/*"/>
+    </bean>
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <restConfiguration apiContextPath="api-docs" bindingMode="json"
+            component="servlet" contextPath="/myfuselab">
+            <apiProperty key="cors" value="true"/>
+            <apiProperty key="api.title" value="My First Camel API Lab"/>
+            <apiProperty key="api.version" value="1.0.0"/>
+        </restConfiguration>
+        <rest path="/customer">
+            <get uri="all">
+                <description>Retrieve all customer data</description>
+                <to uri="direct:getallcustomer"/>
+            </get>
+            <get uri="{custid}">
+                <description>Retrieve a customer data</description>
+                <to uri="direct:getcustomer"/>
+            </get>
+        </rest>
+        <route id="customer">
+            <from id="direct1" uri="direct:getallcustomer"/>
+            <to id="_to1" uri="sql:select * from customerdemo?dataSource=dataSource"/>
+            <log id="_log1" message="${body}"/>
+        </route>
+        <route id="singlecustomer">
+            <from id="direct2" uri="direct:getcustomer"/>
+            <to id="_to2" uri="sql:select * from customerdemo where customerID=:#custid?dataSource=dataSource"/>
+            <log id="_log2" message="${body}"/>
+        </route>
+    </camelContext>
+</beans>
