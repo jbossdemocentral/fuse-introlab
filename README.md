@@ -73,10 +73,14 @@ Login successful.
 
 ```
 
-Install Fuse image stream on OpenShift
+Install Fuse image stream on OpenShift and Database template for this lab
 
 ```
+#FIS image
 oc create -f https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json -n openshift
+
+#MYSQL Database
+oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/db-templates/mysql-ephemeral-template.json -n openshift
 ```
 
 log back in as developer

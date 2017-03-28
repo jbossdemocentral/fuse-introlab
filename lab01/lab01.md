@@ -80,6 +80,13 @@ And lastly select **LOG** component from the *Components* palette to the end of 
 Before we kick start the application, add the database driver dependency in the **pom.xml** file
 
 ```
+...
+<properties>
+  ...
+  <run.profiles>dev</run.profiles>
+</properties>
+...
+
 <dependencies>
 	...
     <dependency>
