@@ -3,7 +3,7 @@
 This very simple lab will guide you to create your very first Fuse SpringBoot project running on OpenShift. There are 3 sections in the lab.
 
 * Create a project that read from a database
-* Expose a restful API endpoint to access data in the datavase
+* Expose a restful API endpoint to access data in the database
 * Deploy your application on OpenShift
 
 ## Installation
