@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <profiles>
+    <profile>
+      <repositories>
+        <repository>
+          <releases>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+            <updatePolicy>never</updatePolicy>
+          </snapshots>
+          <id>rh-ea-repository</id>
+          <name>Red Hat EA repository</name>
+          <url>https://maven.repository.redhat.com/earlyaccess/all/</url>
+        </repository>
+        <repository>
+          <id>apache.snapshots</id>
+          <name>Apache Development Snapshot Repository</name>
+          <url>https://repository.apache.org/content/repositories/snapshots/</url>
+          <releases>
+             <enabled>false</enabled>
+          </releases>
+          <snapshots>
+             <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+      	<pluginRepository>
+           <releases>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+            <updatePolicy>never</updatePolicy>
+          </snapshots>
+          <id>rh-ea-repository</id>
+          <name>Red Hat EA repository</name>
+          <url>https://maven.repository.redhat.com/earlyaccess/all/</url>
+        </pluginRepository>
+        <pluginRepository>
+           <id>apache.snapshots</id>
+            <name>Apache Development Snapshot Repository</name>
+           <url>https://repository.apache.org/content/repositories/snapshots/</url>
+           <releases>
+               <enabled>false</enabled>
+           </releases>
+           <snapshots>
+              <enabled>true</enabled>
+           </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+      <id>rh-ea-repository</id>
+    </profile>
+    <profile>
+      <repositories>
+        <repository>
+          <releases>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+            <updatePolicy>never</updatePolicy>
+          </snapshots>
+          <id>redhat-techpreview-all-repository</id>
+          <name>Red Hat Tech Preview repository (all)</name>
+          <url>http://maven.repository.redhat.com/techpreview/all/</url>
+        </repository>
+        <repository>
+          <releases />
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>jboss-public-repository</id>
+          <url>http://repository.jboss.org/nexus/content/repositories/public/</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <releases>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+            <updatePolicy>never</updatePolicy>
+          </snapshots>
+          <id>redhat-techpreview-all-repository</id>
+          <name>Red Hat Tech Preview repository (all)</name>
+          <url>http://maven.repository.redhat.com/techpreview/all/</url>
+        </pluginRepository>
+        <pluginRepository>
+          <releases />
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>jboss-public-plugin-repository</id>
+          <url>http://repository.jboss.org/nexus/content/repositories/public/</url>
+        </pluginRepository>
+      </pluginRepositories>
+      <id>redhat-all-repository</id>
+    </profile>
+    <profile>
+      <repositories>
+        <repository>
+          <releases />
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>release.fusesource.org</id>
+          <name>FuseSource Release Repository</name>
+          <url>http://repo.fusesource.com/nexus/content/repositories/releases</url>
+        </repository>
+        <repository>
+          <releases />
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>ea.fusesource.org</id>
+          <name>FuseSource Community Early Access Release Repository</name>
+          <url>http://repo.fusesource.com/nexus/content/groups/ea</url>
+        </repository>
+        <repository>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots />
+          <id>snapshot.fusesource.org</id>
+          <name>FuseSource Snapshot Repository</name>
+          <url>http://repo.fusesource.com/nexus/content/repositories/snapshots</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <releases />
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>release.fusesource.org</id>
+          <name>FuseSource Release Repository</name>
+          <url>http://repo.fusesource.com/nexus/content/repositories/releases</url>
+        </pluginRepository>
+        <pluginRepository>
+          <releases />
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>ea.fusesource.org</id>
+          <name>FuseSource Community Early Access Release Repository</name>
+          <url>http://repo.fusesource.com/nexus/content/groups/ea</url>
+        </pluginRepository>
+        <pluginRepository>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots />
+          <id>snapshot.fusesource.org</id>
+          <name>FuseSource Snapshot Repository</name>
+          <url>http://repo.fusesource.com/nexus/content/repositories/snapshots</url>
+        </pluginRepository>
+      </pluginRepositories>
+      <id>FUSE</id>
+    </profile>
+    
+  </profiles>
+  <activeProfiles>
+    <activeProfile>FUSE</activeProfile>
+    <activeProfile>redhat-all-repository</activeProfile>
+    <activeProfile>rh-ea-repository</activeProfile>
+  </activeProfiles>
+  <pluginGroups>
+    <pluginGroup>org.jboss.maven.plugins</pluginGroup>
+    <pluginGroup>org.apache.maven.plugins</pluginGroup>
+    <pluginGroup>org.codehaus.mojo</pluginGroup>
+  </pluginGroups>
+</settings>

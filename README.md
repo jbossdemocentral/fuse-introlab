@@ -108,3 +108,16 @@ Enter **https://10.1.2.2:8443** as the **Server** and click on the **retrieve** 
 In the popup window, log in as Developer using ID/PWD openshift-del/devel. Select ok and check the **Save token** box.
 
 ![06-connection.png](./img/06-connection.png)
+
+## Windows Users
+
+- Make sure you disable  Hyper-V functionality under Control Panel 
+- Add _config.ssh.insert\_key=false_ to **Vagrantfile** ${DEVSUITE_INSTALLTION_PATH}/cdk/components/rhel/rhel-ose/ 
+
+Thanks to @sigreen 
+
+## FAQ
+- How to install Maven?  
+	- Go to https://maven.apache.org/install.html for detail instructions
+- Maven dependency not found? 
+	- ${MAVENI_INSTALLED_DIR} if you are having trouble downloading from the repositories
