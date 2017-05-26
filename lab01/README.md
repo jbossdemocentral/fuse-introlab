@@ -16,7 +16,7 @@ Under *src/main/resources* duplicate **application.properties** and with name **
 
 ![04-devproperties.png](./img/04-devproperties.png)
 
-Add the following datasource configuration to file **application-dev.properties**,
+Append at the end the following datasource configuration to file **application-dev.properties**,
 
 ```
 #Database configuration
