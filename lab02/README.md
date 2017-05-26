@@ -1,37 +1,44 @@
 ## Lab two - Creating APIs
 
-To expose a HTTP API endpoint, we first have to inject a Servlet into Camel context, go to **camel-context.xml** file under **Camel Contexts**, open the *source* tab, add the following code snippet.
+To expose a HTTP API endpoint, we first have to inject a Servlet into Camel context, go to **camel-context.xml** file under **Camel Contexts**, open the *source* tab, add the following code snippet before the `<camelContext..>` tag.
 
 ```
-	<bean class="org.apache.camel.component.servlet.CamelHttpTransportServlet" id="camelHttpTransportServlet"/>
+    ...
+    <bean class="org.apache.camel.component.servlet.CamelHttpTransportServlet" id="camelHttpTransportServlet"/>
     <bean
         class="org.springframework.boot.web.servlet.ServletRegistrationBean" id="servlet">
         <property name="name" value="CamelServlet"/>
         <property name="servlet" ref="camelHttpTransportServlet"/>
         <property name="urlMappings" value="/myfuselab/*"/>
     </bean>
+    ...
 ```
 
-In the sane file, under the **camelcontext** tag add the following code snippet to configure the REST endpoint. So that it is now using the Servlet we have injected from last step
+In the same file, under the `<camelcontext..>` tag add the following code snippet to configure the REST endpoint. So that it is now using the Servlet we have injected from last step
 
 ```
+    ...
        <restConfiguration apiContextPath="api-docs" bindingMode="json"
             component="servlet" contextPath="/myfuselab">
             <apiProperty key="cors" value="true"/>
             <apiProperty key="api.title" value="My First Camel API Lab"/>
             <apiProperty key="api.version" value="1.0.0"/>
         </restConfiguration>
+	<route id="customers">
+    ...
 ```
 
 We are now going to expose a single API endpoint, right after the **restConfiguration** add
 
 ```
-		<rest path="/customer">
+    ...
+        <rest path="/customer">
             <get uri="all">
             	<description>Retrieve all customer data</description>
                 <to uri="direct:getallcustomer"/>
             </get>
         </rest>
+    ...
 ```
 
 Now, instead of trigger the database select with a timer, we are going to trigger it by the API call. In your Camel route, replace the **Timer** with **Direct** component.
@@ -91,9 +98,9 @@ curl -i http://localhost:8080/myfuselab/api-docs
 
 #### HINT!
 
-* Add a new Camel route that takes in customerid as paramter
-	* uri="{custid}"
 * Add a new REST endpoint that takes in customerid and calls the new camel route we just created.
+	* uri="{custid}"
+* Add a new Camel route that takes in customerid as paramter
 	* select * from customerdemo where customerID=:#custid 
 
 Verify with Swagger doc and test the API make sure it is returning customer A01's data in JSON format
