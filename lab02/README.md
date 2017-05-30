@@ -124,8 +124,8 @@ curl -i http://localhost:8080/myfuselab/customer/A01
 In order to connect your Customers API to 3scale, you need to follow three simple steps:
 
 1. Access your 3scale Admin Portal and set up your first plans and metrics and your first API keys.
+1. Configure API access policy and application plans.
 1. Integrate your API with 3scale using the API gateway in the staging environment (for development only).
-1. Map your API endpoints to 3scale methods and metrics.
 
 #### Step 1: Define your API
 
@@ -157,7 +157,7 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
     ![06-configure-apicast.png](./img/06-configure-apicast.png)
 
 1. Click on the **add the Base URL of your API and save the configuration** button
-1. Fill in the information for accessing your API. The private Base URL is the camel servlet server IP and default port (8080). For the staging and production, we will use the same Base URL. For this lab, we are going to use the route from the APIcast Gateway deployed on Openshift.
+1. Fill in the information for accessing your API. The private Base URL is the camel servlet and default port `<HOST-SERVER-IP>:8080`. For this lab, we are going to use the route from the APIcast Gateway deployed on Openshift: `http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80` for staging and `http://customer-api-production.<OPENSHIFT-SERVER-IP>.nip.io:80` for production.
 
     ![07-baseurl-configuration.png](./img/07-baseurl-configuration.png)
 
@@ -258,7 +258,7 @@ In 3scale terms, *applications* define the credentials to access your API. An ap
     You should see the following messages at the bottom of the output:
 
     ```
-    --> Creating resources with label app=3scale-gateway ...
+    --> Creating resources ...
       deploymentconfig "apicast" created
       service "apicast" created
     --> Success
@@ -289,7 +289,7 @@ In 3scale terms, *applications* define the credentials to access your API. An ap
 
     ![20-openshift-create-route.png](./img/20-openshift-create-route.png)
 
-    Enter the same host you set in 3scale above in the section **Public Base URL** (without the http:// and without the port) , e.g. `gateway.openshift.demo`, then click the **Create** button.
+    Enter the same host you set in 3scale above in the section **Public Base URL** (without the http:// and without the port), in this lab: `customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io`, then click the **Create** button.
 
     ![21-openshift-route-config.png](./img/21-openshift-route-config.png)
 
@@ -302,11 +302,54 @@ In 3scale terms, *applications* define the credentials to access your API. An ap
 1. Test that APIcast authorizes a valid call to your API, by executing a curl command with your valid *user_key* to the *hostname* that you configured in the previous step:
 
     ```
-    curl -i "http://gateway.openshift.demo/?user_key=YOUR_USER_KEY" --insecure
+    curl -i "http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80/myfuselab/customer/all?user_key=YOUR_USER_KEY" --insecure
     ```
+    You should see the following messages:
+
+    ```
+    HTTP/1.1 200 OK
+    Server: openresty/1.11.2.2
+    Date: Tue, 30 May 2017 20:13:33 GMT
+    Content-Type: application/json
+    Transfer-Encoding: chunked
+    X-Application-Context: application:dev
+    accept: */*
+    breadcrumbId: ID-traveler-laptop-rh-mx-redhat-com-45222-1496169770755-0-16
+    forwarded: for=192.168.42.1;host=customer-api-staging.192.168.42.100.nip.io;proto=http
+    user-agent: curl/7.29.0
+    user_key: c13de99abb137810df23ce011d2a948a
+    x-3scale-proxy-secret-token: Shared_secret_sent_from_proxy_to_API_backend_71cfe31d89d8cf53
+    x-forwarded-for: 192.168.42.1
+    x-forwarded-host: customer-api-staging.192.168.42.100.nip.io
+    x-forwarded-port: 80
+    x-forwarded-proto: http
+    x-real-ip: 172.17.0.1
+    Set-Cookie: e286b151c44656235d8bdca6ee183477=e58d9930d57779957bf1695b6c805dcd; path=/; HttpOnly
+    Cache-control: private
+
+    [{"CUSTOMERID":"A01","VIPSTATUS":"Diamond","BALANCE":1000},{"CUSTOMERID":"A02","VIPSTATUS":"Gold","BALANCE":500}]
+    ```
+
+    The last line is the same output as when calling the API directly.
 
 2. Test that APIcast does not authorize an invalid call to your API.
 
     ```
-    curl -i "http://gateway.openshift.demo/?user_key=INVALID_KEY" --insecure
+    curl -i "http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80/myfuselab/customer/all?user_key=INVALID_KEY" --insecure
     ```
+
+    When calling the API endpoint with an invalid key, the following messages appear:
+
+    ```
+    HTTP/1.1 403 Forbidden
+    Server: openresty/1.11.2.2
+    Date: Tue, 30 May 2017 20:17:19 GMT
+    Content-Type: text/plain; charset=us-ascii
+    Transfer-Encoding: chunked
+    Set-Cookie: e286b151c44656235d8bdca6ee183477=e58d9930d57779957bf1695b6c805dcd; path=/; HttpOnly
+    ```
+
+    The *HTTP/1.1 403 Forbidden* response code indicates that our user_key was wrong or we don't have permisson to access this API endpoint.
+
+1. You have sucessfully configured 3Scale API Management and Gateway to access your API.
+
