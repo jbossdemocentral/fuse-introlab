@@ -127,6 +127,36 @@ In order to connect your Customers API to 3scale, you need to follow three simpl
 1. Configure API access policy and application plans.
 1. Integrate your API with 3scale using the API gateway in the staging environment (for development only).
 
+#### Review Pre-Reqs
+
+Before provisioning an on-premise API gateway environment, you will want to check on the following regarding your 3Scale SaaS account :
+
+1. 3Scale Domain
+    * You should know what the domain name is of your 3Scale SaaS accoount is.
+
+    * The name of your 3Scale domain is referenced in the URL to your Administrative Portal of the 3Scale SaaS environment. ie: https://&lt;YOURDOMAIN&gt;-admin.3scale.net/p/admin/dashboard.
+
+1. 3Scale Access Token
+    * To get an Access Token, you can easily create one by navigating to:
+
+    `Gear Icon in top right corner -> Personal Settings -> Tokens -> Add Access Token`
+
+    ![00-accesstoken-a.png](./img/00-accesstoken-a.png)
+
+    ![00-accesstoken-b.png](./img/00-accesstoken-b.png)
+
+    ![00-accesstoken-c.png](./img/00-accesstoken-c.png)
+
+    ![00-accesstoken-d.png](./img/00-accesstoken-d.png)
+
+    + The scope of your access token should include access to all three allowed APIs: Billing, Account Management and Analytics.
+
+    * Also ensure that your access token has read / write permissions.
+
+    ![00-accesstoken-e.png](./img/00-accesstoken-e.png)
+
+    **Note: Don't forget to copy your token into a safe place as this is the only point where you'll be able to view it.**
+
 #### Step 1: Define your API
 
 Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides access to a number of configuration features.
@@ -352,4 +382,3 @@ In 3scale terms, *applications* define the credentials to access your API. An ap
     The *HTTP/1.1 403 Forbidden* response code indicates that our user_key was wrong or we don't have permisson to access this API endpoint.
 
 1. You have sucessfully configured 3Scale API Management and Gateway to access your API.
-
