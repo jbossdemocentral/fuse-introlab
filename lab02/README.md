@@ -129,33 +129,33 @@ In order to connect your Customers API to 3scale, you need to follow three simpl
 
 #### Review Pre-Reqs
 
-Before provisioning an on-premise API gateway environment, you will want to check on the following regarding your 3Scale SaaS account :
+Before provisioning an on-premise API gateway environment, you will want to check on the following regarding your 3scale SaaS account :
 
-1. 3Scale Domain
-    * You should know what the domain name is of your 3Scale SaaS accoount is.
+1. 3scale Domain
+    * You should know what the domain name is of your 3scale SaaS accoount is.
 
-    * The name of your 3Scale domain is referenced in the URL to your Administrative Portal of the 3Scale SaaS environment. ie: https://&lt;YOURDOMAIN&gt;-admin.3scale.net/p/admin/dashboard.
+    * The name of your 3scale domain is referenced in the URL to your Administrative Portal of the 3scale SaaS environment. ie: https://&lt;YOURDOMAIN&gt;-admin.3scale.net/p/admin/dashboard.
 
-1. 3Scale Access Token
+1. 3scale Access Token
     * To get an Access Token, you can easily create one by navigating to:
 
-    `Gear Icon in top right corner -> Personal Settings -> Tokens -> Add Access Token`
+        `Gear Icon in top right corner -> Personal Settings -> Tokens -> Add Access Token`
 
-    ![00-accesstoken-a.png](./img/00-accesstoken-a.png)
+        ![00-accesstoken-a.png](./img/00-accesstoken-a.png)
 
-    ![00-accesstoken-b.png](./img/00-accesstoken-b.png)
+        ![00-accesstoken-b.png](./img/00-accesstoken-b.png)
 
-    ![00-accesstoken-c.png](./img/00-accesstoken-c.png)
+        ![00-accesstoken-c.png](./img/00-accesstoken-c.png)
 
-    ![00-accesstoken-d.png](./img/00-accesstoken-d.png)
+        ![00-accesstoken-d.png](./img/00-accesstoken-d.png)
 
-    + The scope of your access token should include access to all three allowed APIs: Billing, Account Management and Analytics.
+    + The scope of your access token should be: *Account Management API*.
 
-    * Also ensure that your access token has read / write permissions.
+    * Also ensure that your access token has *Read Only* permissions.
 
-    ![00-accesstoken-e.png](./img/00-accesstoken-e.png)
+        ![00-accesstoken-e.png](./img/00-accesstoken-e.png)
 
-    **Note: Don't forget to copy your token into a safe place as this is the only point where you'll be able to view it.**
+    **Note: Don't forget to copy your token into a safe place as this is the only point where you'll be able to view it. If you fail to do so, you can always create a new access token.**
 
 #### Step 1: Define your API
 
@@ -187,9 +187,61 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
     ![06-configure-apicast.png](./img/06-configure-apicast.png)
 
 1. Click on the **add the Base URL of your API and save the configuration** button
-1. Fill in the information for accessing your API. The private Base URL is the camel servlet and default port `<HOST-SERVER-IP>:8080`. For this lab, we are going to use the route from the APIcast Gateway deployed on Openshift: `http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80` for staging and `http://customer-api-production.<OPENSHIFT-SERVER-IP>.nip.io:80` for production.
+1. Fill in the information for accessing your API.
+
+    The private Base URL is the camel servlet and default port `<HOST-SERVER-IP>:8080`.
+
+    For this lab, we are going to use the route from the APIcast Gateway deployed on Openshift: `http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80` for staging and `http://customer-api-production.<OPENSHIFT-SERVER-IP>.nip.io:80` for production.
 
     ![07-baseurl-configuration.png](./img/07-baseurl-configuration.png)
+
+1. Expand the **mapping rules** section to define the allowed methods on our exposed API.
+
+    **Note:** the default mapping is the root ("/") of our API resources, something that we might want to avoid.
+
+    ![07b-mapping-rules.png](./img/07b-mapping-rules.png)
+
+1. Click on the **Metric or Method (Define)**  link.
+
+    ![07b-mapping-rules-define.png](./img/07b-mapping-rules-define.png)
+
+1. Click on the **New Method** link in the *Methods* section.
+
+    ![07b-new-method.png](./img/07b-new-method.png)
+
+1. Fill in the information for your Fuse Method.
+
+    **Friendly name:** `Get Customers`
+
+    **System name:** `customers_all`
+
+    **Description:** `Method to return all customers`
+
+    ![07b-new-method-data.png](./img/07b-new-method-data.png)
+
+1. Click on **Create Method**
+
+1. **Optional:** Add the *Get Customer* method if you followed the instructions in the previous part of this lab to search by {id}.
+
+1. Click on the **Add mapping rule** link
+
+    ![07b-add-mapping-rule.png](./img/07b-add-mapping-rule.png)
+
+1. Click on the edit icon next to the GET mapping rule.
+
+    ![07b-edit-mapping-rule.png](./img/07b-edit-mapping-rule.png)
+
+1. Enter `/myfuselab/customer/all` as the Pattern.
+
+1. Select `customers_all` as Method.
+
+    ![07b-getall-rule.png](./img/07b-getall-rule.png)
+
+1. *Optional::* Click on the **Add Mapping Rule** button to add the `Get Customer` method mapping.
+
+1. Scroll down to the **API Test GET request**.
+
+1. Enter `/myfuselab/customer/all`.
 
 1. Click on the **Update the Staging Environment** to save the changes and thenk click on the **Back to Integration & Configuration** link.
 
@@ -271,7 +323,9 @@ In 3scale terms, *applications* define the credentials to access your API. An ap
     oc secret new-basicauth apicast-configuration-url-secret --password=https://<ACCESS_TOKEN>@<DOMAIN>-admin.3scale.net
     ```
 
-    Here &lt;ACCESS_TOKEN&gt; is an Access Token (not a Service Token) for the 3scale Account Management API, and &lt;DOMAIN&gt;-admin.3scale.net is the URL of your 3scale Admin Portal.
+    Here **&lt;ACCESS_TOKEN&gt;** is an Access Token (not a Service Token) for the 3scale Account Management API, and **&lt;DOMAIN&gt;-admin.3scale.net** is the URL of your 3scale Admin Portal.
+
+    *You got his access token and domain in the Pre-Reqs section.*
 
     The response should look like this:
 
@@ -381,4 +435,4 @@ In 3scale terms, *applications* define the credentials to access your API. An ap
 
     The *HTTP/1.1 403 Forbidden* response code indicates that our user_key was wrong or we don't have permisson to access this API endpoint.
 
-1. You have sucessfully configured 3Scale API Management and Gateway to access your API.
+1. You have sucessfully configured 3scale API Management and Gateway to access your API.
