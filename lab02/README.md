@@ -155,7 +155,7 @@ Before provisioning an on-premise API gateway environment, you will want to chec
 
         ![00-accesstoken-e.png](./img/00-accesstoken-e.png)
 
-    **Note: Don't forget to copy your token into a safe place as this is the only point where you'll be able to view it. If you fail to do so, you can always create a new access token.**
+    > **Note:** Don't forget to copy your token into a safe place as this is the only point where you'll be able to view it. If you fail to do so, you can always create a new access token.
 
 #### Step 1: Define your API
 
@@ -197,7 +197,7 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
 
 1. Expand the **mapping rules** section to define the allowed methods on our exposed API.
 
-    **Note:** the default mapping is the root ("/") of our API resources, something that we might want to avoid.
+    > **Note:** the default mapping is the root ("/") of our API resources, something that we might want to avoid.
 
     ![07b-mapping-rules.png](./img/07b-mapping-rules.png)
 
@@ -221,7 +221,7 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
 
 1. Click on **Create Method**
 
-1. **Optional:** Add the *Get Customer* method if you followed the instructions in the previous part of this lab to search by {id}.
+1. **Optional:** Add the `Get Customer` method if you followed the instructions in the previous part of this lab to search by `{id}`. Name it `customer_get`.
 
 1. Click on the **Add mapping rule** link
 
@@ -237,13 +237,13 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
 
     ![07b-getall-rule.png](./img/07b-getall-rule.png)
 
-1. *Optional::* Click on the **Add Mapping Rule** button to add the `Get Customer` method mapping.
+1. *Optional::* Click on the **Add Mapping Rule** button to add the `custoner_get` method mapping.
 
 1. Scroll down to the **API Test GET request**.
 
 1. Enter `/myfuselab/customer/all`.
 
-1. Click on the **Update the Staging Environment** to save the changes and thenk click on the **Back to Integration & Configuration** link.
+1. Click on the **Update the Staging Environment** to save the changes and then click on the **Back to Integration & Configuration** link.
 
     ![08-update-staging.png](./img/08-update-staging.png)
 
@@ -317,7 +317,7 @@ In 3scale terms, *applications* define the credentials to access your API. An ap
 
     Ignore the suggested next steps in the text output at the command prompt and proceed to the next step below.
 
-1. Create a new Secret to reference your project by replacing and with yours.
+1. Create a new secret to reference your admin portal configuration.
 
     ```
     oc secret new-basicauth apicast-configuration-url-secret --password=https://<ACCESS_TOKEN>@<DOMAIN>-admin.3scale.net
@@ -325,7 +325,7 @@ In 3scale terms, *applications* define the credentials to access your API. An ap
 
     Here **&lt;ACCESS_TOKEN&gt;** is an Access Token (not a Service Token) for the 3scale Account Management API, and **&lt;DOMAIN&gt;-admin.3scale.net** is the URL of your 3scale Admin Portal.
 
-    *You got his access token and domain in the Pre-Reqs section.*
+    > **Note:** You got this access token and domain in the Pre-Reqs section.
 
     The response should look like this:
 
