@@ -165,13 +165,17 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
 
     ![01-login.png](./img/01-login.png)
 
-1. The first page you will land is the API tab. From here we will create our API definition. Select the `Create Service` option.
+1. If it's the first time you access the 3scale portal, like when you click the *activate* link from the sign up email, dismiss and close the wizard by clicking on the top right **X**.
 
-    ![02-create-service.png](./img/02-create-service.png)
+    ![01a-wizard.png](./img/01a-wizard.png)
 
-1. Fill in the information for your API. Name it `Customers API` and `customers` for the system name. Add your personal description.
+1. The first page you will land is the API tab. From here we will create our API definition. Click on the `Integration` link.
 
-    ![03-new-service.png](./img/03-new-service.png)
+    ![02-api-integration.png](./img/02-api-integration.png)
+
+1. Click on the `edit integration settings` to edit the API settings for the gateway.
+
+    ![03-edit-settings.png](./img/03-edit-settings.png)
 
 1. Select the **APIcast self-managed** Gateway deployment option.
 
@@ -181,19 +185,9 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
 
     ![05-authentication.png](./img/05-authentication.png)
 
-1. Click on **Create Service**
-1. Select your new API and click on **Configure Self-managed Gateway**
-
-    ![06-configure-apicast.png](./img/06-configure-apicast.png)
+1. Click on **Update Service**
 
 1. Click on the **add the Base URL of your API and save the configuration** button
-1. Fill in the information for accessing your API.
-
-    The private Base URL is the camel servlet and default port `<HOST-SERVER-IP>:8080`.
-
-    For this lab, we are going to use the route from the APIcast Gateway deployed on Openshift: `http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80` for staging and `http://customer-api-production.<OPENSHIFT-SERVER-IP>.nip.io:80` for production.
-
-    ![07-baseurl-configuration.png](./img/07-baseurl-configuration.png)
 
 1. Expand the **mapping rules** section to define the allowed methods on our exposed API.
 
@@ -239,6 +233,20 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
 
 1. *Optional::* Click on the **Add Mapping Rule** button to add the `custoner_get` method mapping.
 
+1. Fill in the information for accessing your API:
+
+    **Private Base URL** is the camel servlet and default port `http://<VM-SERVER-IP>:8080`.
+
+    * To check the `<VM-SERVER-IP>`, open a terminal window in your VM and issue the following command:
+
+        `ifconfig | awk '{match($0,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/); ip = substr($0,RSTART,RLENGTH); print ip}' | sort -r | head -1`
+
+    **Staging Public Base URL:** `http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80`
+
+    **Production Public Base URL:** `http://customer-api-production.<OPENSHIFT-SERVER-IP>.nip.io:80`
+
+    ![07-baseurl-configuration.png](./img/07-baseurl-configuration.png)
+
 1. Scroll down to the **API Test GET request**.
 
 1. Enter `/myfuselab/customer/all`.
@@ -249,46 +257,94 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
 
 1. Success! Your 3scale access control layer will now only allow authenticated calls through to your backend API.
 
-#### Step 2: Configure your API access policies with application plans
+#### Step 2: Register a new account using the Developer Portal
 
-In the previous step, you ensured that only authenticated calls are allowed through to your API. Now you will apply policies to differentiate rate limits.
+The focal point of your developers’ experience is the API developer portal, and the level of effort you put into it will determine the level of decreased support costs and increased developer engagement. 3scale provides a built-in, state-of-the-art CMS portal, making it very easy to create your own branded hub with a custom domain to manage developer interactions and increase API adoption.
 
-In 3scale terms, *applications* define the credentials to access your API. An application is always associated with one *application plan*, which determines the access policies. Applications are stored within *developer accounts* – in the basic 3scale plans only a single application is allowed, but in the higher plans multiple applications per account are allowed.
+You can customize the look and feel of the entire Developer Portal to match your own branding. You have complete control over every element of the portal, so you can make it as easy as possible for developers to learn how to use your API.
 
-1. Let's create a new application plan for this example. In order to do this, navigate to the **Application Plans** tab and click on **Create Application Plan**.
+The Developer Portal's CMS consists of a few elements:
+* Horizontal menu in the Admin Portal with access to content, redirects, and changes
+* The main area containing details of the sections above
+* CMS mode, accessible through the preview option
 
-    ![09-create-applicationplan.png](./img/09-create-applicationplan.png)
+![09-developer-portal.png](./img/09-developer-portal.png)
 
-1. Fill in the information for the name of your plan. In the form that opens, specify the desired name – for example "limited" – and the system name. Then click on **Create Application Plan** button.
+Liquid is a simple programming language used for displaying and processing most of the data from the 3scale system available for API providers. In the 3scale platform, it is used to expose server-side data to your API developers, greatly extending the usefulness of the CMS while maintaining a high level of security.
 
-    ![10-name-plan.png](./img/10-name-plan.png)
+1. Click on the `Developer Portal` tab to access the developer portal settings.
 
-    After the previous step, you should see the list of application plans.
+    ![10-developer-portal.png](./img/10-developer-portal.png)
 
-1. Your plan is created, now you need you to publish it. Click on the `publish` link to made it public.
+1. Click on the `Visit Developer Portal` to take a look of how your developer portal looks like.
 
-    ![11-publish-plan.png](./img/11-publish-plan.png)
+    ![11-visit-devportal.png](./img/11-visit-devportal.png)
 
-1. To asociate the application plan with an application, navigate to the **Developers** tab and click on the `Developer` link.
+    You can see there is a default portal with information of your API and how to signup. Unfortunately the API information is incorrect.
 
-    ![12-developers.png](./img/12-developers.png)
+    ![12-devportal-overview.png](./img/12-devportal-overview.png)
 
-1. Click on the `1 Application` link to access this developer's applications.
+    > **Note:** We will edit our portal to update it with the correct information and to add the shadowman cool logo.
 
-    ![13-applications.png](./img/13-applications.png)
+1. Go back to your admin portal browser tab and search the content sub-sections for the `Layouts `and select the `</> Main layout`
 
-1. Now, create a new Application by clicking the **Create Application** button.
+    ![12-main-layout.png](./img/12-main-layout.png)
 
-    ![14-create-application.png](./img/14-create-application.png)
+1. First look for the `navbar` section of the main HTML. Replace the `{{ provider.name }}` for the shadowman image link:
 
-1. Select the previously created application plan from the combobox and fill in the information for the application. Click on the **Create Application** to save your changes.
+    `<img src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/logo.png" alt="{{ provider.name }}">`
 
-    ![15-new-application.png](./img/15-new-application.png)
+    ![13-custom-logo.png](./img/13-custom-logo.png)
 
-1. In the next screen, you will be presented with the autogenerated user key that will be used to access your API.
+1. Click on `Publish` button at the bottom of the editor to save the changes and made them available in the site.
 
-    ![16-user-key.png](./img/16-user-key.png)
+    ![14-publish-devportal.png](./img/14-publish-devportal.png)
 
+1. Go back to browse the top of the content sub-sections and find the `Homepage` section.
+
+    ![15-homepage-devportal.png](./img/15-homepage-devportal.png)
+
+1. Change all the code `Echo` references in the homepage code for `Customer`.
+
+1. Update the API call examples to reflect your real Fuse API calls.
+
+    > **Note:** Use your production base url and add your defined methods. Dont worry if you don't have the "real" output, it won't affect the rest of the lab.
+
+1. Refresh your Developer Portal's browser tab to check the changes. Your Developer Portal should look like this:
+
+    ![16-updated-devportal.png](./img/16-updated-devportal.png)
+
+1. Take the place of one of your developers and signup for the **Basic** plan.
+
+    ![16a-signup-limited.png](./img/16a-signup-limited.png)
+
+1. Fill in your information and your email to register as a developer. Click on the `Sign up` button.
+
+    ![16b-signup-form.png](./img/16b-signup-form.png)
+
+    > **Note:** Use an email address you can actually access.
+
+1. Check your email and click on the `activate` link.
+
+    ![16c-activate-account.png](./img/16c-activate-account.png)
+
+1. As your portal is not currently public, you will need your portal code to finish the registration. You can get the code in your admin portal navigating to: `Settings > Developer Portal > Domains & Access`.
+
+    ![16d-access-portal.png](./img/16d-access-portal.png)
+
+1. Type your portal code to finish the account activation.
+
+    ![16e-ingress-code.png](./img/16e-ingress-code.png)
+
+1. Now that your developer account is active, sign in the portal.
+
+    ![16f-dev-signin.png](./img/16f-dev-signin.png)
+
+1. You will land in the developers homepage, where you will be able to check your developers settings and retrieve your `User Key`.
+
+    ![16g-user-key.png](./img/16g-user-key.png)
+
+    > **Note:** Copy down this key as it is used to authenticate yourself to the managed API.
 
 #### Step 3: Deploy APIcast using the OpenShift template
 
@@ -383,7 +439,7 @@ In 3scale terms, *applications* define the credentials to access your API. An ap
 
 #### Step 4: Test APIcast
 
-1. Test that APIcast authorizes a valid call to your API, by executing a curl command with your valid *user_key* to the *hostname* that you configured in the previous step:
+1. Test that APIcast authorizes a valid call to your API, by executing a curl command with your valid developer's `user_key` to the `hostname` that you configured in the previous step:
 
     ```
     curl -i "http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80/myfuselab/customer/all?user_key=YOUR_USER_KEY" --insecure
