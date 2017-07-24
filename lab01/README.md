@@ -4,6 +4,9 @@ In JBoss Developer Studio, create a new project by right click in the project ex
 ![01-FIS-project.png](./img/01-FIS-project.png)
 
 Enter **myfuselab** as the project name, and click *next*
+
+IT's IMPORTANT to NOTE that to select **2.18.1.redhat-000012** as the Camel Version!!
+
 In select target runtime, click *next*
 
 ![02-runtime.png](./img/02-runtime.png)
@@ -11,6 +14,8 @@ In select target runtime, click *next*
 In Advance project setup, choose **Use a predefined template** and select **Fuse on OpenShift** -> **SprintBoot on OpenShift** and click *finish*
 
 ![03-template.png](./img/03-template.png)
+
+JBDS is going ask if you want to change to Fuse perspective, click yes. 
 
 Under *src/main/resources* duplicate **application.properties** and with name **application-dev.properties**, we are going to use this as the setting during our developement time.
 
