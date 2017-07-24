@@ -27,8 +27,8 @@ In the same file, under the `<camelcontext..>` tag add the following code snippe
             <apiProperty key="api.title" value="My First Camel API Lab"/>
             <apiProperty key="api.version" value="1.0.0"/>
         </restConfiguration>
-	<route id="customers">
-    ...
+	<!-- Right above route id="customer" -->    
+	...
 ```
 
 We are now going to expose a single API endpoint, right after the **restConfiguration** add
