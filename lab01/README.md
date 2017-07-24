@@ -102,7 +102,7 @@ Before we kick start the application, add the database driver dependency in the 
     ...
 </dependencies>
 ```
-Right click on the **myfuselab** in the project explorer panel, select **Run As..** -> **Maven build** 
+Right click on the **myfuselab** in the project explorer panel, select **Run As..** -> **Maven build...** 
 
 ![14-mavenrun.png](./img/14-mavenrun.png)
 
