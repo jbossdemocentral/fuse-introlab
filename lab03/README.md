@@ -30,7 +30,11 @@ Since we will be using MYSQL database, add the driver dependency in **pom.xml**
 ```
 
 
-In Red Hat JBoss Developer Studio, under OpenShift Explorer, right click on the connection that connects to current OpenShift, and create a new project. **NEW** -> **Project**
+Open OpenShift Explorer view, on the top menu select window -> Show view -> others. a window will popup. Type openshift in the search field. And select OpenShift Explorer
+![00-view.png](./img/00-view.png)
+![00-openshiftexplorer02.png](./img/00-openshiftexplorer.png)
+
+In OpenShift Explorer, right click on the connection that connects to current OpenShift, and create a new project. **NEW** -> **Project**
 
 ![01-newproject.png](./img/01-newproject.png)
 
@@ -66,7 +70,7 @@ In the pop-up menu, select **Deploy myfuselab on OpenShift** on the left panel. 
 
 ![08-runconfig.png](./img/08-runconfig.png)
 
-To see everything running, in your browser, go to *https://10.1.2.2:8443/console* and login with **openshif-dev/devel**. Select **My Fuse Project**. And you will see both application in the overview page.
+To see everything running, in your browser, go to *https://10.1.2.2:8443/console* and login with **<ID>/<password>** (for people using *oc cluster up or wrapper, it's developler/developer*). Select **My Fuse Project**. And you will see both application in the overview page.
 
 ![09-overview.png](./img/09-overview.png)
 
@@ -83,8 +87,8 @@ Don't change anything and hit Create.
 Access the API endpoint by going to following URL
 
 ```
-curl http://camel-ose-springboot-xml-sample.rhel-cdk.10.1.2.2.xip.io/myfuselab/customer/all
-curl  http://camel-ose-springboot-xml-sample.rhel-cdk.10.1.2.2.xip.io/myfuselab/customer/A01
+curl http://<YOUR_ROUTE>/myfuselab/customer/all
+curl  http://<YOUR_ROUTE>/myfuselab/customer/A01
 ```
 
 Verify that it is returning customer data in JSON format
