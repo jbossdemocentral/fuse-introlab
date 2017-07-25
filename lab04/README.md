@@ -7,7 +7,7 @@ In order to connect your Customers API to 3scale, you need to follow three simpl
 
 1. Access your 3scale Admin Portal and set up your first service.
 1. Customize your Developer Portal and sign up as a developer.
-1. Integrate your API with 3scale using the API gateway in the staging environment (for development only).
+1. Integrate your API with 3scale using the API gateway.
 
 ### Step 0: Review Pre-Reqs
 
@@ -113,21 +113,19 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
 
     ![07b-getall-rule.png](./img/07b-getall-rule.png)
 
-1. *Optional::* Click on the **Add Mapping Rule** button to add the `custoner_get` method mapping.
+1. *Optional::* Click on the **Add Mapping Rule** button to add the `customer_get` method mapping.
 
 1. Fill in the information for accessing your API:
 
-    **Private Base URL** is the camel servlet and default port `http://<VM-SERVER-IP>:8080`.
-
-    * To check the `<VM-SERVER-IP>`, open a terminal window in your VM and issue the following command:
-
-        `ifconfig | awk '{match($0,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/); ip = substr($0,RSTART,RLENGTH); print ip}' | sort -r | head -1`
+    **Private Base URL:** `http://camel-ose-springboot-xml.myfuseproject.svc.cluster.local:80`
 
     **Staging Public Base URL:** `http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80`
 
     **Production Public Base URL:** `http://customer-api-production.<OPENSHIFT-SERVER-IP>.nip.io:80`
 
     ![07-baseurl-configuration.png](./img/07-baseurl-configuration.png)
+
+    > **Note:** We are using the internal API service, as we are deploying our services inside the same OpenShift cluster.
 
 1. Scroll down to the **API Test GET request**.
 
@@ -136,6 +134,10 @@ Your 3scale Admin Portal (http://&lt;YOURDOMAIN&gt;-admin.3scale.net) provides a
 1. Click on the **Update the Staging Environment** to save the changes and then click on the **Back to Integration & Configuration** link.
 
     ![08-update-staging.png](./img/08-update-staging.png)
+
+1. Click on the **Promote v.1 to Production** button to promote your configuration from staging to production.
+
+    ![08a-promote-production.png](./img/08a-promote-production.png)
 
 1. Success! Your 3scale access control layer will now only allow authenticated calls through to your backend API.
 
@@ -244,7 +246,7 @@ Liquid is a simple programming language used for displaying and processing most 
 2. Create your project. This example sets the display name as *gateway*
 
     ```
-    oc new-project "3scalegateway" --display-name="gateway" --description="3scale gateway demo"
+    oc new-project "3scalegateway" --display-name="API Gateway" --description="3scale API gateway"
     ```
 
     The response should look like this:
@@ -311,9 +313,27 @@ Liquid is a simple programming language used for displaying and processing most 
 
     ![20-openshift-create-route.png](./img/20-openshift-create-route.png)
 
-    Enter the same host you set in 3scale above in the section **Public Base URL** (without the http:// and without the port), in this lab: `customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io`, then click the **Create** button.
+    Enter the same host you set in 3scale above in the section **Staging Public Base URL** (without the http:// and without the port), in this lab's step 1: `customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io`, then click the **Create** button.
 
     ![21-openshift-route-config.png](./img/21-openshift-route-config.png)
+
+1. Now add the production route. This time select `Applications -> Routes` from the left options.
+
+    ![22-applications-routes.png](./img/22-applications-routes.png)
+
+1. Click on the `Create Route` button.
+
+    ![23-create-route.png](./img/23-create-route.png)
+
+1. Fill in the information.
+
+    **Name:** `apicast-production`
+
+    **Hostname:** `customer-api-production.<OPENSHIFT-SERVER-IP>.nip.io`
+
+    ![24-production-route.png](./img/24-production-route.png)
+
+1. Create on the `Create` button in the botton of the page to save the production route.
 
     Your API Gateways are now ready to receive traffic. OpenShift takes care of load-balancing incoming requests to the route across the two running APIcast instances.
 
@@ -324,7 +344,7 @@ Liquid is a simple programming language used for displaying and processing most 
 1. Test that APIcast authorizes a valid call to your API, by executing a curl command with your valid developer's `user_key` to the `hostname` that you configured in the previous step:
 
     ```
-    curl -i "http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80/myfuselab/customer/all?user_key=YOUR_USER_KEY" --insecure
+    curl -i "http://customer-api-production.<OPENSHIFT-SERVER-IP>.nip.io:80/myfuselab/customer/all?user_key=YOUR_USER_KEY" --insecure
     ```
     You should see the following messages:
 
@@ -357,7 +377,7 @@ Liquid is a simple programming language used for displaying and processing most 
 2. Test that APIcast does not authorize an invalid call to your API.
 
     ```
-    curl -i "http://customer-api-staging.<OPENSHIFT-SERVER-IP>.nip.io:80/myfuselab/customer/all?user_key=INVALID_KEY" --insecure
+    curl -i "http://customer-api-production.<OPENSHIFT-SERVER-IP>.nip.io:80/myfuselab/customer/all?user_key=INVALID_KEY" --insecure
     ```
 
     When calling the API endpoint with an invalid key, the following messages appear:
