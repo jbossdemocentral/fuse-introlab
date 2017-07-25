@@ -66,7 +66,7 @@ In the pop-up menu, select **Deploy myfuselab on OpenShift** on the left panel. 
 
 ![08-runconfig.png](./img/08-runconfig.png)
 
-To see everything running, in your browser, go to *https://10.1.2.2:8443/console* and login with **openshif-dev/devel**. Select **My Fuse Project**. And you will see both application in the overview page.
+To see everything running, in your browser, go to *https://10.1.2.2:8443/console* and login with **<ID>/<password>** (for people using *oc cluster up or wrapper, it's developler/developer*). Select **My Fuse Project**. And you will see both application in the overview page.
 
 ![09-overview.png](./img/09-overview.png)
 
