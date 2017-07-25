@@ -30,7 +30,11 @@ Since we will be using MYSQL database, add the driver dependency in **pom.xml**
 ```
 
 
-In Red Hat JBoss Developer Studio, under OpenShift Explorer, right click on the connection that connects to current OpenShift, and create a new project. **NEW** -> **Project**
+Open OpenShift Explorer view, on the top menu select window -> Show view -> others. a window will popup. Type openshift in the search field. And select OpenShift Explorer
+![00-view.png](./img/00-view.png)
+![00-openshiftexplorer02.png](./img/00-openshiftexplorer.png)
+
+In OpenShift Explorer, right click on the connection that connects to current OpenShift, and create a new project. **NEW** -> **Project**
 
 ![01-newproject.png](./img/01-newproject.png)
 
