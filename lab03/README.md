@@ -87,8 +87,8 @@ Don't change anything and hit Create.
 Access the API endpoint by going to following URL
 
 ```
-curl http://camel-ose-springboot-xml-sample.rhel-cdk.10.1.2.2.xip.io/myfuselab/customer/all
-curl  http://camel-ose-springboot-xml-sample.rhel-cdk.10.1.2.2.xip.io/myfuselab/customer/A01
+curl http://<YOUR_ROUTE>/myfuselab/customer/all
+curl  http://<YOUR_ROUTE>/myfuselab/customer/A01
 ```
 
 Verify that it is returning customer data in JSON format
