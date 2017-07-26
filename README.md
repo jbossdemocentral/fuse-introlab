@@ -5,6 +5,16 @@ This very simple lab will guide you to create your very first Fuse SpringBoot pr
 * Create a project that read from a database
 * Expose a restful API endpoint to access data in the database
 * Deploy your application on OpenShift
+* Manage and control the access to your API using 3scale
+
+## Red Hat 3scale API Management Platform Account
+This lab focuses on the deployment and administration of Red Hat 3Scale. One deployment topology available is known as a *hybrid* approach. A *hybrid* Red Hat 3Scale deployment topology is one in which the 3Scale API gateway is self-managed in your own environment. This self-managed API gateway is in two-way communication with the hosted Red Hat 3Scale SaaS API Management Platform (AMP).
+
+![00-3scale.png](./img/00-3scale.png)
+
+The focus of lab 04 of this course is on this hybrid deployment topology. Subsequently, the lab 04 make heavy use of your account in the Red Hat 3Scale SaaS AMP. If you do not have a Red Hat 3Scale SaaS, please register for free trial one at: https://www.3scale.net/signup/.
+
+You will receive an email in your inbox to complete the signup process and activate your account.
 
 ## Installation
 Before you begin, please make sure the following software are properly installed
@@ -23,7 +33,7 @@ Double click on the JBoss Development Suite, log in using your Red Hat Developer
 ![01-login.png](./img/01-login.png)
 
 Pick an installation folder destination.
-The installer guide will detect the components needed, and guide you through the installation process. 
+The installer guide will detect the components needed, and guide you through the installation process.
 
 Installed the components with the version specified in the installer and start to download and install.
 
@@ -62,13 +72,13 @@ export PATH=${vagrant_dir}/data/service-manager/bin/openshift/1.4.0:$PATH
 eval "$(VAGRANT_NO_COLOR=1 vagrant service-manager install-cli openshift  | tr -d '\r')"
 ```
 
-Login as admin 
+Login as admin
 
 ```
 oc login -u admin
 Authentication required for https://10.1.2.2:8443 (openshift)
 Username: admin
-Password: 
+Password:
 Login successful.
 
 ```
@@ -89,7 +99,7 @@ log back in as developer
 oc login -u openshift-dev
 Authentication required for https://10.1.2.2:8443 (openshift)
 Username: openshift-dev
-Password: 
+Password:
 Login successful.
 
 ```
@@ -111,13 +121,13 @@ In the popup window, log in as Developer using ID/PWD openshift-del/devel. Selec
 
 ## Windows Users
 
-- Make sure you disable  Hyper-V functionality under Control Panel 
-- Add _config.ssh.insert\_key=false_ to **Vagrantfile** ${DEVSUITE_INSTALLTION_PATH}/cdk/components/rhel/rhel-ose/ 
+- Make sure you disable  Hyper-V functionality under Control Panel
+- Add _config.ssh.insert\_key=false_ to **Vagrantfile** ${DEVSUITE_INSTALLATION_PATH}/cdk/components/rhel/rhel-ose/
 
-Thanks to @sigreen 
+Thanks to @sigreen
 
 ## FAQ
 - How to install Maven?  
 	- Go to https://maven.apache.org/install.html for detail instructions
-- Maven dependency not found? 
-	- ${MAVENI_INSTALLED_DIR} if you are having trouble downloading from the repositories
+- Maven dependency not found?
+	- ${MAVEN_INSTALLED_DIR} if you are having trouble downloading from the repositories
