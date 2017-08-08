@@ -1,5 +1,56 @@
 ## Lab three - Deploying to OpenShift
 
+###Starting CDK
+
+For Agile Integration Workshop 
+Go to your terminal, and type in 
+
+```
+oc-cluster up your_name
+```
+
+This will start up the Openshift platform in your instance. 
+
+```
+$ oc-cluster up yourname
+# Using client for ocp v3.5.5.31
+[INFO] Created self signed certs. You can avoid self signed certificates warnings by trusting this certificate: /home/ec2-user/.oc/certs/master.server.crt
+[INFO] Running a previously created cluster
+oc cluster up --version v3.5.5.31 --image registry.access.redhat.com/openshift3/ose --public-hostname 127.0.0.1 --routing-suffix apps.127.0.0.1.nip.io --host-data-dir /home/ec2-user/.oc/profiles/test/data --host-config-dir /home/ec2-user/.oc/profiles/test/config --host-pv-dir /home/ec2-user/.oc/profiles/test/pv --use-existing-config -e TZ=EDT
+-- Checking OpenShift client ... OK
+-- Checking Docker client ... OK
+-- Checking Docker version ... OK
+-- Checking for existing OpenShift container ... OK
+-- Checking for registry.access.redhat.com/openshift3/ose:v3.5.5.31 image ... OK
+-- Checking Docker daemon configuration ... OK
+-- Checking for available ports ... 
+   WARNING: Binding DNS on port 8053 instead of 53, which may not be resolvable from all clients.
+-- Checking type of volume mount ... 
+   Using nsenter mounter for OpenShift volumes
+-- Creating host directories ... OK
+-- Finding server IP ... 
+   Using 172.31.28.24 as the server IP
+-- Starting OpenShift container ... 
+   Starting OpenShift using container 'origin'
+   Waiting for API server to start listening
+   OpenShift server started
+-- Removing temporary directory ... OK
+-- Checking container networking ... OK
+-- Server Information ... 
+   OpenShift server started.
+   The server is accessible via web console at:
+       https://127.0.0.1:8443
+
+   To login as administrator:
+       oc login -u system:admin
+
+-- Permissions on profile dir fixed
+Switched to context "test".
+```
+You can try view the OpenShift console by going to https://127.0.0.1:8443/console in the browser. 
+![00-openshift.png](./img/00-openshift.png)
+
+
 Now it's time to deploy the application onto OpenShift, we have been testing with the H2 Database in memeory, now it's time to run it with a real database. Add the following datasource setting under *src/main/resources* in **application.properties**
 
 ```
@@ -70,7 +121,7 @@ In the pop-up menu, select **Deploy myfuselab on OpenShift** on the left panel. 
 
 ![08-runconfig.png](./img/08-runconfig.png)
 
-To see everything running, in your browser, go to *https://10.1.2.2:8443/console* and login with **<ID>/<password>** (for people using *oc cluster up or wrapper, it's developler/developer*). Select **My Fuse Project**. And you will see both application in the overview page.
+To see everything running, in your browser, go to *https://<OPENSHIFT_IP>:8443/console* and login with **<ID>/<password>** (for people using *oc cluster up or wrapper, it's developler/developer*). Select **My Fuse Project**. And you will see both application in the overview page.
 
 ![09-overview.png](./img/09-overview.png)
 
