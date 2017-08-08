@@ -5,7 +5,7 @@ In JBoss Developer Studio, create a new project by right click in the project ex
 
 Enter **myfuselab** as the project name, and click *next*
 
-IT's IMPORTANT to NOTE that to select **2.18.1.redhat-000012** as the Camel Version!!
+IMPORTANT NOTE : MUST select **2.18.1.redhat-000012** as the Camel Version!!
 
 In select target runtime, click *next*
 
