@@ -1,6 +1,91 @@
 ## Lab three - Deploying to OpenShift
 
-Now it's time to deploy the application onto OpenShift, we have been testing with the H2 Database in memeory, now it's time to run it with a real database. Add the following datasource setting under *src/main/resources* in **application.properties**
+First, you will need to start your all-in-one OpenShift cluster.
+
+1. Open a Terminal window
+
+1. Issue the following command to check your internal IP address:
+
+    ```
+    ifconfig
+    ```
+
+    You will see an output like the following:
+
+    ```
+    enp0s25: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.7.57  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::3e97:eff:fe26:38ff  prefixlen 64  scopeid 0x20<link>
+        ether 3c:97:0e:26:38:ff  txqueuelen 1000  (Ethernet)
+        RX packets 409561  bytes 326113476 (311.0 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 396033  bytes 184335273 (175.7 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 20  memory 0xd2500000-d2520000  
+
+    lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 66641  bytes 24324856 (23.1 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 66641  bytes 24324856 (23.1 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+    ...
+    ```
+    **Note:** You will need to copy the information of the *inet* for the Ethernet connection that starts with **enpXXXX** and has the following pattern: **192.168.X.X** or **10.X.X.X**. If you have two Ethernet interfaces, use the one with the higher initial value.
+
+    That will be your **OPENSHIFT-SERVER-IP** value to replace now on.
+
+1. Start your OpenShift cluster with the following command:
+
+    ```
+    oc-cluster up agileintegration --public-hostname <OPENSHIFT-SERVER-IP> --routing-suffix=apps.<OPENSHIFT-SERVER-IP>.nip.io
+    ```
+
+    You will see an output like the following:
+
+    ```
+    # Using client for ocp v3.5.5.31
+    [INFO] Running a new cluster
+    [INFO] Self signed CA copied into the cluster
+
+    ...
+
+    -- Server Information ...
+       OpenShift server started.
+       The server is accessible via web console at:
+           https://192.168.42.100:8443
+
+       Your are logged in as:
+           User:     developer
+           Password: developer
+
+       To login as administrator:
+           oc login -u system:admin
+
+    ...
+
+    [INFO] Cluster created sucessfully
+    Restarting oepnshift. Done
+    ```
+
+    Take notice of the developer user and password, you will use it later to login in the system. Also write down the web console URL address to login later on the lab.
+
+    **Note:** If you need to stop your cluster at any time issue the `oc-cluster down agileintegration` command.
+
+1. Add the `mysql-ephemeral` and `FIS` templates:
+
+   FIS images
+   ```
+   oc create -f https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json -n openshift --as=system:admin
+   ```
+   MYSQL Database
+   ```
+   oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/db-templates/mysql-ephemeral-template.json -n openshift --as=system:admin
+   ```
+
+Now it's time to deploy the application onto OpenShift, we have been testing with the H2 Database in memory, now it's time to run it with a real database. Add the following datasource setting under *src/main/resources* in **application.properties**
 
 ```
 #mysql specific
@@ -31,12 +116,26 @@ Since we will be using MYSQL database, add the driver dependency in **pom.xml**
 
 
 Open OpenShift Explorer view, on the top menu select window -> Show view -> others. a window will popup. Type openshift in the search field. And select OpenShift Explorer
+
 ![00-view.png](./img/00-view.png)
+
 ![00-openshiftexplorer02.png](./img/00-openshiftexplorer.png)
 
 In OpenShift Explorer, right click on the connection that connects to current OpenShift, and create a new project. **NEW** -> **Project**
 
 ![01-newproject.png](./img/01-newproject.png)
+
+**Note:** If you haven't create a connection previously:
+
+1. Click on **New Connection Wizard...** to configure OpenShift. Enter your web console URL address (https://&lt;OPENSHIFT-SERVER-IP&gt;:8443) as the **Server** and click on the **retrieve** link to access the token.
+1. In the popup window, log in as Developer using ID/PWD developer/developer.
+
+    ![05-token.png](../img/05-token.png)
+
+1. Click on **Close**
+1. Check the **Save token** box and click Finish
+
+    ![06-connection.png](../img/06-connection.png)
 
 And create Project Name: **myfuseproject** with Display Namw: **My Fuse Project**
 
@@ -66,11 +165,11 @@ Now we can finally push our application to OpenShift by right click on your proj
 
 ![07-runmvn.png](./img/07-runmvn.png)
 
-In the pop-up menu, select **Deploy myfuselab on OpenShift** on the left panel. Go to  **JRE** tab on the right, inside VM arguments, update kuberenets.namespace to **myfuseproject** and username/password to **openshif-dev/devel**. And **RUN**.
+In the pop-up menu, select **Deploy myfuselab on OpenShift** on the left panel. Go to  **JRE** tab on the right, inside VM arguments, update kuberenets.master with your Openshift web console URL address **https://&lt;OPENSHIFT-SERVER-IP&gt;:8443** and kubernetes.namespace to **myfuseproject** and username/password to **developer/developer**. And **RUN**.
 
 ![08-runconfig.png](./img/08-runconfig.png)
 
-To see everything running, in your browser, go to *https://10.1.2.2:8443/console* and login with **<ID>/<password>** (for people using *oc cluster up or wrapper, it's developler/developer*). Select **My Fuse Project**. And you will see both application in the overview page.
+To see everything running, in your browser, go to *https://&lt;OPENSHIFT-SERVER-IP&gt;:8443/console/* and login with **&lt;username&gt;/&lt;password&gt;** (for people using *oc cluster up or oc-cluster wrapper, it's developler/developer*). Select **My Fuse Project**. And you will see both application in the overview page.
 
 ![09-overview.png](./img/09-overview.png)
 
@@ -122,7 +221,7 @@ mysql-1-xxxxx                          1/1       Running   0          2m
 oc rsh mysql-1-xxxxx
 
 sh-4.2$ mysql -udbuser -p sampledb
-Enter password: 
+Enter password:
 
 mysql> select * from customerdemo;
 +------------+-----------+---------+
