@@ -31,6 +31,7 @@ First, you will need to start your all-in-one OpenShift cluster.
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 66641  bytes 24324856 (23.1 MiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+    
     ...
     ```
     **Note:** You will need to copy the information of the *inet* for the Ethernet connection that starts with **enpXXXX** and has the following pattern: **192.168.X.X** or **10.X.X.X**. If you have two Ethernet interfaces, use the one with the higher initial value.
@@ -47,12 +48,29 @@ First, you will need to start your all-in-one OpenShift cluster.
 
     ```
     # Using client for ocp v3.5.5.31
-    [INFO] Running a new cluster
-    [INFO] Self signed CA copied into the cluster
-
-    ...
-
-    -- Server Information ...
+    [INFO] Created self signed certs. You can avoid self signed certificates warnings by trusting this certificate: /home/ec2-user/.oc/certs/master.server.crt
+    [INFO] Running a previously created cluster
+    oc cluster up --version v3.5.5.31 --image registry.access.redhat.com/openshift3/ose --public-hostname 127.0.0.1 --routing-suffix apps.127.0.0.1.nip.io --host-data-dir /home/ec2-user/.oc/profiles/test/data --host-config-dir /home/ec2-user/.oc/profiles/test/config --host-pv-dir /home/ec2-user/.oc/profiles/test/pv --use-existing-config -e TZ=EDT
+    -- Checking OpenShift client ... OK
+    -- Checking Docker client ... OK
+    -- Checking Docker version ... OK
+    -- Checking for existing OpenShift container ... OK
+    -- Checking for registry.access.redhat.com/openshift3/ose:v3.5.5.31 image ... OK
+    -- Checking Docker daemon configuration ... OK
+    -- Checking for available ports ... 
+       WARNING: Binding DNS on port 8053 instead of 53, which may not be resolvable from all clients.
+    -- Checking type of volume mount ... 
+       Using nsenter mounter for OpenShift volumes
+    -- Creating host directories ... OK
+    -- Finding server IP ... 
+       Using 172.31.28.24 as the server IP
+    -- Starting OpenShift container ... 
+       Starting OpenShift using container 'origin'
+       Waiting for API server to start listening
+       OpenShift server started
+    -- Removing temporary directory ... OK
+    -- Checking container networking ... OK
+    -- Server Information ... 
        OpenShift server started.
        The server is accessible via web console at:
            https://192.168.42.100:8443
@@ -84,6 +102,11 @@ First, you will need to start your all-in-one OpenShift cluster.
    ```
    oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/db-templates/mysql-ephemeral-template.json -n openshift --as=system:admin
    ```
+
+You can try view the OpenShift console by going to https://127.0.0.1:8443/console in the browser. 
+
+![00-openshift.png](./img/00-openshift.png)
+
 
 Now it's time to deploy the application onto OpenShift, we have been testing with the H2 Database in memory, now it's time to run it with a real database. Add the following datasource setting under *src/main/resources* in **application.properties**
 
