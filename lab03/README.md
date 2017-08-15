@@ -31,7 +31,7 @@ First, you will need to start your all-in-one OpenShift cluster.
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 66641  bytes 24324856 (23.1 MiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-    
+
     ...
     ```
     **Note:** You will need to copy the information of the *inet* for the Ethernet connection that starts with **enpXXXX** and has the following pattern: **192.168.X.X** or **10.X.X.X**. If you have two Ethernet interfaces, use the one with the higher initial value.
@@ -57,20 +57,20 @@ First, you will need to start your all-in-one OpenShift cluster.
     -- Checking for existing OpenShift container ... OK
     -- Checking for registry.access.redhat.com/openshift3/ose:v3.5.5.31 image ... OK
     -- Checking Docker daemon configuration ... OK
-    -- Checking for available ports ... 
+    -- Checking for available ports ...
        WARNING: Binding DNS on port 8053 instead of 53, which may not be resolvable from all clients.
-    -- Checking type of volume mount ... 
+    -- Checking type of volume mount ...
        Using nsenter mounter for OpenShift volumes
     -- Creating host directories ... OK
-    -- Finding server IP ... 
+    -- Finding server IP ...
        Using 172.31.28.24 as the server IP
-    -- Starting OpenShift container ... 
+    -- Starting OpenShift container ...
        Starting OpenShift using container 'origin'
        Waiting for API server to start listening
        OpenShift server started
     -- Removing temporary directory ... OK
     -- Checking container networking ... OK
-    -- Server Information ... 
+    -- Server Information ...
        OpenShift server started.
        The server is accessible via web console at:
            https://192.168.42.100:8443
@@ -103,7 +103,7 @@ First, you will need to start your all-in-one OpenShift cluster.
    oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/db-templates/mysql-ephemeral-template.json -n openshift --as=system:admin
    ```
 
-You can try view the OpenShift console by going to https://127.0.0.1:8443/console in the browser. 
+You can try view the OpenShift console by going to https://&lt;OPENSHIFT-SERVER-IP&gt;:8443/console in the browser. 
 
 ![00-openshift.png](./img/00-openshift.png)
 
