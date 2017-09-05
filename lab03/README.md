@@ -156,7 +156,7 @@ In OpenShift Explorer, right click on the connection that connects to current Op
     ![05-token.png](../img/05-token.png)
 
 1. Click on **Close**
-1. Check the **Save token** box and click Finish
+1. **UNCHECK** the *Save token* box and click Finish
 
     ![06-connection.png](../img/06-connection.png)
 
