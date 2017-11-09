@@ -75,7 +75,7 @@ First, you will need to start your all-in-one OpenShift cluster.
        The server is accessible via web console at:
            https://192.168.42.100:8443
 
-       Your are logged in as:
+       You are logged in as:
            User:     developer
            Password: developer
 
@@ -85,10 +85,10 @@ First, you will need to start your all-in-one OpenShift cluster.
     ...
 
     [INFO] Cluster created sucessfully
-    Restarting oepnshift. Done
+    Restarting openshift. Done
     ```
 
-    Take notice of the developer user and password, you will use it later to login in the system. Also write down the web console URL address to login later on the lab.
+    Take notice of the developer user and password, you will use it later to login to the system. Also write down the web console URL address to login later on the lab.
 
     **Note:** If you need to stop your cluster at any time issue the `oc-cluster down agileintegration` command.
 
@@ -148,7 +148,7 @@ In OpenShift Explorer, right click on the connection that connects to current Op
 
 ![01-newproject.png](./img/01-newproject.png)
 
-**Note:** If you haven't create a connection previously:
+**Note:** If you haven't created a connection previously:
 
 1. Click on **New Connection Wizard...** to configure OpenShift. Enter your web console URL address (https://&lt;OPENSHIFT-SERVER-IP&gt;:8443) as the **Server** and click on the **retrieve** link to access the token.
 1. In the popup window, log in as Developer using ID/PWD developer/developer.
@@ -164,7 +164,7 @@ And create Project Name: **myfuseproject** with Display Namw: **My Fuse Project*
 
 ![02-projectname.png](./img/02-projectname.png)
 
-In side the project we are going to first create a MYSQL database for our appkication, right click on the new project name **myfuseproject** -> **New** -> **Application**
+Inside the project we are going to first create a MYSQL database for our application. Right click on the new project name **myfuseproject** -> **New** -> **Application**
 
 ![03-newapp.png](./img/03-newapp.png)
 
@@ -184,7 +184,7 @@ Click Finish, and you should see the mysql instance running in OpenShift explore
 
 ![06-mysqlcreated.png](./img/06-mysqlcreated.png)
 
-Now we can finally push our application to OpenShift by right click on your project in project explorer. Select **Run As** -> **Run Configurations...**
+Now we can finally push our application to OpenShift by right clicking on your project in project explorer. Select **Run As** -> **Run Configurations...**
 
 ![07-runmvn.png](./img/07-runmvn.png)
 
@@ -231,7 +231,7 @@ Click on **Route Diagram** and hit the URL couple of times to see what happens.
 
 ![14-javaconsole.png](./img/14-javaconsole.png)
 
-For those of you who wants to see what is going on in database, login to the MYSQL database in your command line console.
+For those of you who want to see what is going on in database, login to the MYSQL database in your command line console.
 
 ```
 oc project myfuseproject
