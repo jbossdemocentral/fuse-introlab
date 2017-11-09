@@ -17,7 +17,7 @@ In Advance project setup, choose **Use a predefined template** and select **Fuse
 
 JBDS is going ask if you want to change to Fuse perspective, click yes. 
 
-Under *src/main/resources* duplicate **application.properties** and with name **application-dev.properties**, we are going to use this as the setting during our developement time.
+Under *src/main/resources* duplicate **application.properties** and with name **application-dev.properties**, we are going to use this as the setting during our development time.
 
 ![04-devproperties.png](./img/04-devproperties.png)
 
@@ -110,7 +110,7 @@ in the pop-up windown enter **spring-boot:run** in *Goals* and select **Skip Tes
 
 ![15-springbootrun.png](./img/15-springbootrun.png)
 
-In you log console, verify that cutomer data are printed.
+In your log console, verify that customer data is printed.
 ```
 customer - [{CUSTOMERID=A01, VIPSTATUS=Diamond, BALANCE=1000}, {CUSTOMERID=A02, VIPSTATUS=Gold, BALANCE=500}]
 ```
