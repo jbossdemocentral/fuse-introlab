@@ -115,7 +115,7 @@ Enter **https://10.1.2.2:8443** as the **Server** and click on the **retrieve** 
 
 ![05-token.png](./img/05-token.png)
 
-In the popup window, log in as Developer using ID/PWD openshift-del/devel. Select ok and check the **Save token** box.
+In the popup window, log in as Developer using ID/PWD openshift-dev/devel. Select ok and check the **Save token** box.
 
 ![06-connection.png](./img/06-connection.png)
 
