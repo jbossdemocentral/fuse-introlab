@@ -176,6 +176,7 @@ Make sure to configure the following parameters
 
 ```
 MYSQL_PASSWORD = password
+MYSQL_ROOT_PASSWORD = password
 MYSQL_USER = dbuser
 ```
 ![05-param.png](./img/05-param.png)
