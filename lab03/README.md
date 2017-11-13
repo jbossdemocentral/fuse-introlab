@@ -160,7 +160,7 @@ In OpenShift Explorer, right click on the connection that connects to current Op
 
     ![06-connection.png](../img/06-connection.png)
 
-And create Project Name: **myfuseproject** with Display Namw: **My Fuse Project**
+And create Project Name: **myfuseproject** with Display Name: **My Fuse Project**
 
 ![02-projectname.png](./img/02-projectname.png)
 
