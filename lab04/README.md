@@ -111,7 +111,7 @@ Before provisioning an on-premise API gateway environment, you will want to chec
 
     ![24-production-route.png](./img/24-production-route.png)
 
-1. Create on the `Create` button in the botton of the page to save the production route.
+1. Click on the `Create` button in the botton of the page to save the production route.
 
     Your API Gateways are now ready to receive traffic. OpenShift takes care of load-balancing incoming requests to the route across the two running APIcast instances.
 
