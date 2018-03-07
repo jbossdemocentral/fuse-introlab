@@ -2,7 +2,7 @@
 
 This very simple lab will guide you to create your very first Fuse-based SpringBoot microservice project running on OpenShift. There are 4 sections in the labs.
 
-* Create a project that read from a database
+* Create a project that reads from a database
 * Expose a restful API endpoint to access data in the database
 * Deploy your application on OpenShift
 * Manage and control the access to your API using 3scale
