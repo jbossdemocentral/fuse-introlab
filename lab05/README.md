@@ -17,7 +17,7 @@ In Advance project setup, choose **Use a predefined template** and select **Fuse
 
 JBDS is going ask if you want to change to Fuse perspective, click yes. 
 
-Right-click on the *src/* directory and click "New" then "Folder".  Name the folder ** data **.
+Right-click on the *src/* directory and click "New" then "Folder".  Name the folder **data**.
 
 Right-click on the *src/data* directory, then click "New" then "File".  Call the file **event1.xml**.  Paste the following contents into the File by selecting the "Source" tab.
 
@@ -169,7 +169,7 @@ Now, update the "Uri" for each File component (**When1** through **When3** to `f
 
 ![15-fileoutput2.png](./img/15-fileoutput2.png)
 
-Next up we're going to transform our XML cycle-count file into a CSV file, using the POJO datamodel that we created in Java earlier.  To do this, copy the **Transformer** component to the **When3** box.  A pop-up wizard will appear.  Enter the **Transformation ID** as `EventToCSV`, and select `XML` as the Source Type, then `Java` as the Target Type.  Click "Next".
+Next up we're going to transform our XML cycle-count file into a CSV file, using the POJO datamodel that we created in Java earlier.  To do this, copy the **Data Transformation** component to the **When3** box.  A pop-up wizard will appear.  Enter the **Transformation ID** as `EventToCSV`, and select `XML` as the Source Type, then `Java` as the Target Type.  Click "Next".
 
 ![16-datatransformer.png](./img/16-datatransformer.png)
 
