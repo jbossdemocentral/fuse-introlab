@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <!-- Define a traditional camel context here -->
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <endpoint id="EventToCSV" uri="dozer:EventToCSV?sourceModel=generated_1520525684829.Event&amp;targetModel=com.redhat.usecase.one.Event&amp;unmarshalId=generated_1520525684829&amp;mappingFile=transformation.xml"/>
+        <dataFormats>
+            <jaxb contextPath="generated_1520525684829" id="generated_1520525684829"/>
+            <bindy classType="com.redhat.usecase.one.Event"
+                id="bindyDataformat" type="Csv"/>
+        </dataFormats>
+        <route id="transform-xml-csv">
+            <from id="_from1" uri="file:src/data?noop=true"/>
+            <choice id="_choice1">
+                <when id="_when1">
+                    <xpath>/event/@type = 'adjustment'</xpath>
+                    <to id="_to1" uri="file:target/events/adjustments"/>
+                </when>
+                <when id="_when2">
+                    <xpath>/event/@type = 'receipt'</xpath>
+                    <to id="_to2" uri="file:target/events/receipts"/>
+                </when>
+                <when id="_when3">
+                    <xpath>/event/@type = 'cycle-count'</xpath>
+                    <to id="_to5" uri="ref:EventToCSV"/>
+                    <marshal id="_marshal1" ref="bindyDataformat"/>
+                    <to id="_to3" uri="file:target/events/cycle-count?fileName=${file:name.noext}.csv"/>
+                </when>
+                <otherwise id="_otherwise1">
+                    <to id="_to4" uri="file:target/events/others?fileName=${file:name.noext}.txt"/>
+                </otherwise>
+            </choice>
+        </route>
+    </camelContext>
+</beans>
