@@ -72,6 +72,8 @@ Use Timer to kick start the route, drag the **TIMER** component from the *Compon
 
 To read data from the datasource, select **SQL** component from the *Components* palette on the right to the route. Under *Properties*-> *Advance* tab -> *Path*, set **Query** to **select * from customerdemo** 
 
+Hover your mouse over the timer component in the route and use the "Create connection" tool to link the timer to the SQL component.
+
 ![11-sqlcomponent.png](./img/11-sqlcomponent.png)
 
 and in *Common* tab set **Data Source** to **dataSource**
